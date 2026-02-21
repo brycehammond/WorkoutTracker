@@ -11,6 +11,8 @@ final class Exercise {
     var targetRepsMax: Int
     var sortOrder: Int
     var sfSymbol: String
+    var defaultWeight: Double
+    var imageName: String?
 
     var workoutDay: WorkoutDay?
 
@@ -35,7 +37,9 @@ final class Exercise {
         targetRepsMin: Int = Constants.defaultTargetRepsMin,
         targetRepsMax: Int = Constants.defaultTargetRepsMax,
         sortOrder: Int,
-        sfSymbol: String = "dumbbell.fill"
+        sfSymbol: String = "dumbbell.fill",
+        defaultWeight: Double = 0,
+        imageName: String? = nil
     ) {
         self.id = UUID()
         self.name = name
@@ -45,5 +49,7 @@ final class Exercise {
         self.targetRepsMax = targetRepsMax
         self.sortOrder = sortOrder
         self.sfSymbol = sfSymbol
+        self.defaultWeight = defaultWeight
+        self.imageName = imageName
     }
 }

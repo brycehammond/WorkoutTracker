@@ -8,7 +8,11 @@ struct WorkoutDayListView: View {
         List {
             Section {
                 ForEach(workoutDay.sortedExercises) { exercise in
-                    exerciseRow(exercise)
+                    NavigationLink {
+                        ExerciseDetailView(exercise: exercise)
+                    } label: {
+                        exerciseRow(exercise)
+                    }
                 }
             } header: {
                 Text("\(workoutDay.sortedExercises.count) exercises")

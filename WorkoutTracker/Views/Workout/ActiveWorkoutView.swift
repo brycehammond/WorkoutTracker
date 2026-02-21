@@ -11,6 +11,7 @@ struct ActiveWorkoutView: View {
     @State private var showCancelAlert = false
     @State private var showFinishAlert = false
     @State private var showBeginnerBanner = true
+    @State private var selectedExerciseForDetail: Exercise?
     @Query(filter: #Predicate<WorkoutSession> { $0.isCompleted })
     private var completedSessions: [WorkoutSession]
 
@@ -71,6 +72,19 @@ struct ActiveWorkoutView: View {
                 }
             }
             .interactiveDismissDisabled()
+            .sheet(item: $selectedExerciseForDetail) { exercise in
+                NavigationStack {
+                    ExerciseDetailView(exercise: exercise)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Done") {
+                                    selectedExerciseForDetail = nil
+                                }
+                            }
+                        }
+                }
+                .presentationDetents([.medium, .large])
+            }
         }
         .persistentSystemOverlays(.hidden)
     }
@@ -182,6 +196,12 @@ struct ActiveWorkoutView: View {
                 }
 
                 Menu {
+                    Button {
+                        selectedExerciseForDetail = exercise
+                    } label: {
+                        Label("Exercise Info", systemImage: "info.circle")
+                    }
+
                     if isSkipped {
                         Button("Include Exercise") {
                             viewModel.unskipExercise(exercise)
